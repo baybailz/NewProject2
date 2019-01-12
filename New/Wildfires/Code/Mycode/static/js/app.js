@@ -138,6 +138,8 @@ function buildCharts(year) {
   
   
   Plotly.newPlot("bubble", bubbleData, bubbleLayout)
+
+  
   
 
   // var pieTrace = {

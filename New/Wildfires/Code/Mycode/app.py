@@ -124,6 +124,30 @@ def bigfires(year):
 
     return jsonify(df_big_dict)
 
+@app.route("/coords")
+def coords():
+
+    coords = [
+        Fire.Lat,
+        Fire.Long,
+        Fire.Fire_Size
+    ]
+
+    coord_results = db.session.query(*coords).all()
+
+    df_coord = pd.DataFrame(coord_results)
+
+    df_coord = df_coord.dropna()
+
+    df_coord_sort = df_coord.sort_values(by="Fire_Size", ascending = False).head(1000)
+
+    df_coord_sort = df_coord_sort.reset_index()
+
+    df_coord_dict = df_coord_sort.to_dict(orient="record")
+
+    return jsonify(df_coord_dict)
+
+
 
 if __name__ == "__main__": 
     app.run()
